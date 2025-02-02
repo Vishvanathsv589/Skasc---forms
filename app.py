@@ -4,8 +4,8 @@ from math import radians, sin, cos, sqrt, atan2
 app = Flask(__name__)
 
 # Define the allowed location (latitude & longitude) and radius (meters)
-CENTER_LAT = 10.939328
-CENTER_LNG = 76.958976
+CENTER_LAT = 11.013325
+CENTER_LNG = 76.988416
 MAX_DISTANCE = 50  # 50 meters
 
 def calculate_distance(lat1, lng1, lat2, lng2):
