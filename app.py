@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, send_from_directory, send_file, request, jsonify
 from math import radians, sin, cos, sqrt, atan2
 
 app = Flask(__name__)
@@ -10,7 +10,7 @@ MAX_DISTANCE = 50  # 50 meters
 
 def calculate_distance(lat1, lng1, lat2, lng2):
     """Calculate the distance between two lat/lng points using the Haversine formula."""
-    R = 6371000  # Radius of the Earth in meters
+    R = 6371000  # Radius of Earth in meters
     dlat = radians(lat2 - lat1)
     dlng = radians(lng2 - lng1)
     
@@ -21,12 +21,21 @@ def calculate_distance(lat1, lng1, lat2, lng2):
 
 @app.route("/")
 def index():
-    """Render the main page."""
-    return render_template("index.html")
+    """Serve the main HTML page."""
+    return send_file("index.html")
+
+@app.route("/script.js")
+def script():
+    """Serve the JavaScript file."""
+    return send_file("script.js")
+
+@app.route("/styles.css")
+def styles():
+    return send_from_directory(".", "styles.css")
 
 @app.route("/check_location", methods=["POST"])
 def check_location():
-    """API endpoint to verify if the user is within the allowed location."""
+    """API to check if user is within the allowed location."""
     data = request.json
     user_lat = float(data.get("latitude"))
     user_lng = float(data.get("longitude"))
